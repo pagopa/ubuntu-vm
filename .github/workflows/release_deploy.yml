@@ -24,6 +24,10 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
+
       - run: echo "tag=$(cat version.txt)" >> $GITHUB_ENV
 
       - name: Bump Version
@@ -37,6 +41,5 @@ jobs:
         id: semver
         uses: pagopa/github-actions-template/ghcr-build-push@v1.5.4
         with:
-          branch: ${{ github.ref_name}}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.bump_version.outputs.new_version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
