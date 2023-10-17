@@ -7,5 +7,6 @@ RUN apt-get install -y git pip python3 nodejs
 RUN pip install -r requirements.txt
 
 
+EXPOSE 8080
 
-CMD python3 ./status.py
+ENTRYPOINT ["python3",  "./status.py"]

@@ -16,19 +16,13 @@ cursor = connection.cursor()
 print("Cursor created")
 
 print("Executing query...")
-mapping = []
-i = 0
 sqlQuery = str("""
                     UPDATE NODO4_CFG.PSP
                     SET  NODO4_CFG.PSP='ABC'
                     WHERE NODO4_CFG.PSP.ID_PSP = 'JACOPO'
                    """)
 
-for row in cursor.execute(sqlQuery):
-    mapping.append(row)
-    i += 1
-    print(row)
-
+cursor.execute(sqlQuery)
 connection.close()
 
-print("Found {} bundles that match the query".format(i))
+print("Done")
