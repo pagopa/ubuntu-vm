@@ -19,19 +19,15 @@ print("Executing query...")
 mapping = []
 i = 0
 sqlQuery = str("""
-                    SELECT 
-	                    p.ID_PSP,
-	                    p.ABI
-                    FROM 
-	                    NODO4_CFG.PSP p
-                    WHERE 
-                        p.ID_PSP NOT LIKE '%CHARITY%'
-                    ORDER BY p.ID_PSP
+                    UPDATE NODO4_CFG.PSP
+                    SET  NODO4_CFG.PSP='ABC'
+                    WHERE NODO4_CFG.PSP.ID_PSP = 'JACOPO'
                    """)
 
 for row in cursor.execute(sqlQuery):
     mapping.append(row)
     i += 1
+    print(row)
 
 connection.close()
 
