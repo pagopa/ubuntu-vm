@@ -1,0 +1,40 @@
+name: Release
+
+# Controls when the workflow will run
+on:
+  push:
+    main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+permissions:
+  packages: write
+  contents: write
+  issues: write
+  id-token: write
+  actions: read
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  setup:
+    name: Setup
+    runs-on: ubuntu-latest
+    outputs:
+      semver: ${{ steps.get_semver.outputs.semver }}
+      environment: ${{ steps.get_env.outputs.environment }}
+
+
+  image:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and Push
+        id: semver
+        uses: pagopa/github-actions-template/ghcr-build-push@v1.5.4
+        with:
+          branch: ${{ github.ref_name}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: 1.0.0
