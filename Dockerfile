@@ -2,7 +2,7 @@ FROM ubuntu:latest
 COPY . .
 
 RUN apt-get update -y
-RUN apt-get install -y git pip python3 nodejs
+RUN apt-get install -y git pip python3 nodejs vim ping
 
 RUN pip install -r requirements.txt
 
