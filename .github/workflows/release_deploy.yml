@@ -19,22 +19,23 @@ permissions:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  setup:
-    name: Setup
-    runs-on: ubuntu-latest
-    outputs:
-      semver: ${{ steps.get_semver.outputs.semver }}
-      environment: ${{ steps.get_env.outputs.environment }}
-
-
   image:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     steps:
+      - run: echo "tag=$(cat version.txt)" >> $GITHUB_ENV
+
+      - name: Bump Version
+        id: bump_version
+        uses: pagopa/github-actions-template/bump-semver@main
+        with:
+          semver: 'minor'
+          current_version: env.tag
+
       - name: Build and Push
         id: semver
         uses: pagopa/github-actions-template/ghcr-build-push@v1.5.4
         with:
           branch: ${{ github.ref_name}}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: 1.0.0
+          tag: ${{ steps.bump_version.outputs.new_version }}

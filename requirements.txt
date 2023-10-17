@@ -1,3 +1,1 @@
 Flask==3.0.0
-pipenv==2023.2.18
-requests==2.31.0
