@@ -2,7 +2,7 @@ FROM ubuntu:latest
 COPY . .
 
 RUN apt-get update -y
-RUN apt-get install -y git pip python3 nodejs vim curl iputils-ping wget openjdk-16-jre-headless
+RUN apt-get install -y git pip python3 nodejs vim curl iputils-ping wget default-jre-headless
 
 RUN pip install -r requirements.txt
 
