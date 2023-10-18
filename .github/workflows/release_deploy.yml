@@ -38,6 +38,27 @@ jobs:
           semver: 'minor'
           current_version: ${{ env.version }}
 
+      - name: Push New Version
+        shell: bash
+        run: |
+          echo ${{ steps.bump_version.outputs.new_version }} > ./version.txt
+          git add .
+          git config --global user.email "github-bot@pagopa.it"
+          git config --global user.name "pagopa-github-bot"
+          git commit -m "Bump to version ${{ steps.bump_version.outputs.new_version }} [skip ci]" || exit 0
+          git push origin ${{ github.ref_name }}
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit: ${{ github.ref_name }}
+          tag: ${{ steps.bump_version.outputs.new_version }}
+          name: Release ${{ steps.bump_version.outputs.new_version }}
+          makeLatest: latest
+          generateReleaseNotes: true
+
       - name: Build and Push
         id: semver
         uses: pagopa/github-actions-template/ghcr-build-push@v1.5.4
