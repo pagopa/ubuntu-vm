@@ -25,7 +25,6 @@ microservice-chart:
     initialDelaySeconds: 30
     failureThreshold: 6
     periodSeconds: 10
-
   readinessProbe:
     httpGet:
       path: /status/ready
@@ -39,7 +38,6 @@ microservice-chart:
     type: ClusterIP
     ports:
       - 8080
-
   ingress:
     create: true
     host: "weudev.apiconfig.internal.dev.platform.pagopa.it"
@@ -52,11 +50,9 @@ microservice-chart:
     name: ""
 
   podAnnotations: {}
-
   podSecurityContext:
     seccompProfile:
       type: RuntimeDefault
-
   securityContext:
     allowPrivilegeEscalation: false
     readOnlyRootFilesystem: false
@@ -71,7 +67,6 @@ microservice-chart:
     limits:
       memory: "256Mi"
       cpu: "150m"
-
   autoscaling:
     enable: true
     minReplica: 1
@@ -83,7 +78,6 @@ microservice-chart:
         metadata:
           type: Utilization
           value: "60"
-
 
   envConfig:
     SPRING_DATASOURCE_USERNAME: 'NODO4_CFG'

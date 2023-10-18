@@ -28,9 +28,19 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
+      - name: Get version
+        run: echo "version=$(cat ./version.txt)" >> $GITHUB_ENV
+
+      - name: Bump Version
+        id: bump_version
+        uses: pagopa/github-actions-template/bump-semver@main
+        with:
+          semver: 'minor'
+          current_version: ${{ env.version }}
+
       - name: Build and Push
         id: semver
         uses: pagopa/github-actions-template/ghcr-build-push@v1.5.4
         with:
-          tag: '1.0.3'
+          tag: ${{ steps.bump_version.outputs.new_version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}

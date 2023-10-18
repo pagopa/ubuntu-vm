@@ -13,4 +13,4 @@ def get_ready():
     return jsonify({"status": "ok"})
 
 
-app.run(port=8080)
+app.run(host='0.0.0.0', debug=True, port=8080)
