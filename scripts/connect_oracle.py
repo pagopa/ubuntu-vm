@@ -21,9 +21,12 @@ with open('psp.csv') as csv_file:
             print(f'Column names are {", ".join(row)}')
             line_count += 1
         else:
-            print(f'\t PSP {row[1]} set taxcode {row[2]}')
-            line_count += 1
-            values.append((row[2], row[1]))
+            tax_code = row[8]
+            psp_codes = row[2]
+            for psp_code in psp_codes.split(','):
+                print(f'\t PSP {psp_code} set taxcode {tax_code}')
+                line_count += 1
+                values.append((tax_code, psp_code))
 
     print("Executing query...")
     cursor = connection.cursor()

@@ -1,0 +1,3 @@
+contract_id,document_name,provider_names,signed_date,contract_type,name,Nome breve,abi,tax_code,vat_code,vat_group,pec_mail,courtesy_mail,referente fattura_mail,sdd,sdi_code,membership_id,recipient_id
+pagopa-psp-54,CI017_A_Mooney Spa,"SIGPITM1XXX,ABI32532,ITBBITM1",05/12/2019,A,Mooney S.p.A.,Mooney,32532,06529501006,12564030968,TRUE,mooney@pec.mooney.it,paolo.bonelli@mooney.it,,FALSE,A4707H7,pagopa-psp-183,pagopa-psp-54
+pagopa-psp-383,CI358_A_AIGIS BANCA ,,18/01/2020,A,Aigis Banca S.p.A.,Aigis Banca,03323,06150120720,06150120720,FALSE,info@aigisbanca.infocert.it ,sistemidipagamento@aigisbanca.it,,FALSE,,pagopa-psp-383,pagopa-psp-01
