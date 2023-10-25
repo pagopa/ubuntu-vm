@@ -4,8 +4,8 @@ import oracledb
 
 
 connection = oracledb.connect(
-    dsn="db-nodo-pagamenti.d.db-nodo-pagamenti.com/NDPSPCT_PP_NODO4_CFG",
-    port=1522,
+    dsn=os.environ['SPRING_DATASOURCE_HOST'],
+    port=int(os.environ['SPRING_DATASOURCE_PORT']),
     user=os.environ['SPRING_DATASOURCE_USERNAME'],
     password=os.environ['SPRING_DATASOURCE_PASSWORD']
 )
@@ -24,9 +24,10 @@ with open('psp.csv') as csv_file:
             tax_code = row[8]
             psp_codes = row[2]
             for psp_code in psp_codes.split(','):
-                print(f'\t PSP {psp_code} set taxcode {tax_code}')
-                line_count += 1
-                values.append((tax_code, psp_code))
+                if len(psp_code) > 0:
+                    print(f'\t PSP {psp_code} set taxcode {tax_code}')
+                    line_count += 1
+                    values.append((tax_code, psp_code))
 
     print("Executing query...")
     cursor = connection.cursor()
