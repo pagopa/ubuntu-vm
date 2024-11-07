@@ -2,47 +2,49 @@
 FROM ubuntu:latest
 COPY . .
 
-RUN apt-get update -y
-RUN apt-get install -y git pip python3 nodejs vim curl iputils-ping postgresql-client
-
-RUN pip install -r requirements.txt --break-system-packages
-
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    wget \
-    libaio1t64 \
-    unzip \
-    && rm -rf /var/lib/apt/lists/*
-
-
 # Set environment variables for Oracle Instant Client
-ENV ORACLE_HOME=/opt/oracle/
+ENV ORACLE_HOME=/opt/oracle
 ENV LD_LIBRARY_PATH=$ORACLE_HOME
 
-RUN ls && cd /usr && ls && cd /lib && ls && cd *-linux-gnu && ls
-RUN ln -s /usr/lib/*-linux-gnu/libaio.so.1t64 ${ORACLE_HOME}libaio.so.1
-
-# Define the Oracle Instant Client download URLs
+# Define Oracle Instant Client download URLs
 ENV BASIC_ZIP_URL="https://download.oracle.com/otn_software/linux/instantclient/2350000/instantclient-basic-linux.x64-23.5.0.24.07.zip"
 ENV SQLPLUS_ZIP_URL="https://download.oracle.com/otn_software/linux/instantclient/2350000/instantclient-sqlplus-linux.x64-23.5.0.24.07.zip"
 
-# Download Oracle Instant Client files
+# Install dependencies in one RUN statement, clean up apt cache
+RUN apt-get update && \
+apt-get install -y --no-install-recommends \
+    git \
+    nodejs \
+    vim \
+    curl \
+    iputils-ping \
+    postgresql-client \
+    wget \
+    libaio1 \
+    unzip && \
+    rm -rf /var/lib/apt/lists/*
+
+# Download and set up Oracle Instant Client
 RUN wget --no-check-certificate "${BASIC_ZIP_URL}" -O /tmp/instantclient-basic.zip && \
-    wget --no-check-certificate "${SQLPLUS_ZIP_URL}" -O /tmp/instantclient-sqlplus.zip
+    wget --no-check-certificate "${SQLPLUS_ZIP_URL}" -O /tmp/instantclient-sqlplus.zip && \
+    mkdir -p ${ORACLE_HOME} && \
+    unzip -q /tmp/instantclient-basic.zip -d /tmp/oracle_basic && \
+    unzip -q /tmp/instantclient-sqlplus.zip -d /tmp/oracle_sqlplus && \
+    mv /tmp/oracle_basic/instantclient_*/* ${ORACLE_HOME}/ && \
+    mv /tmp/oracle_sqlplus/instantclient_*/* ${ORACLE_HOME}/ && \
+    ln -s ${ORACLE_HOME}/instantclient ${ORACLE_HOME}/instantclient && \
+    ln -s ${ORACLE_HOME}/sqlplus /usr/bin/sqlplus && \
+    ln -s /usr/lib/*-linux-gnu/libaio.so.1 /usr/lib/libaio.so.1 && \
+    rm -rf /tmp/*
 
-# Unzip and set up Oracle Instant Client
-RUN mkdir -p ${ORACLE_HOME}
-RUN unzip "/tmp/instantclient-basic.zip" -d /tmp/oracle_basic
-RUN unzip "/tmp/instantclient-sqlplus.zip" -d /tmp/oracle_sqlplus
-RUN mv /tmp/oracle_basic/instantclient_*/* ${ORACLE_HOME}/
-RUN mv /tmp/oracle_sqlplus/instantclient_*/* ${ORACLE_HOME}/
-RUN #    rm -rf /tmp
-RUN ln -s ${ORACLE_HOME}/instantclient ${ORACLE_HOME}/instantclient
-RUN ln -s ${ORACLE_HOME}/sqlplus /usr/bin/sqlplus
+# Copy application files into the container
+COPY . .
 
-# Test SQL*Plus installation
-#RUN sqlplus -version
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
+# Expose the port the app runs on
 EXPOSE 8080
 
-ENTRYPOINT ["python3",  "./status.py"]
+# Set the entrypoint for the container
+ENTRYPOINT ["python3", "./status.py"]
