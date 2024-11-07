@@ -19,8 +19,7 @@ RUN apt-get update && apt-get install -y \
 ENV ORACLE_HOME=/opt/oracle/
 ENV LD_LIBRARY_PATH=$ORACLE_HOME
 
-RUN ln -s /usr/lib/x86_64-linux-gnu/libaio.so.1t64 ${ORACLE_HOME}/libaio.so.1
-
+RUN ln -s /usr/lib/aarch64-linux-gnu/libaio.so.1t64 ${ORACLE_HOME}/libaio.so.1
 
 # Define the Oracle Instant Client download URLs
 ENV BASIC_ZIP_URL="https://download.oracle.com/otn_software/linux/instantclient/2350000/instantclient-basic-linux.x64-23.5.0.24.07.zip"
