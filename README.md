@@ -1,39 +1,45 @@
 # 🐧 Ubuntu VM
 
-This is a docker image with Ubuntu and some tools pre-installed (for example: python3 and nodejs).
+This Docker image contains an Ubuntu base with several tools pre-installed, such as Python 3 and Node.js. 
 
-It's usefull for connecting to `NODO_CFG` Database
+It's usefull for connecting to the `NODO_CFG` database.
 
 ---
 
-## 📦 Make a Release
-You can use conventional commits on master branch to trigger a new release.
+## 📦 Creating a Release
 
-> [!NOTE]
-> You can trigger the GitHub Action manually too.
+To trigger a new release, use conventional commits on the master branch.
 
-## 🚀 Deploy
-To deploy a new image on AKS you have to run helm this command locally:
+> [!NOTE]  
+> You can also manually trigger the GitHub Action for the release.
+
+## 🚀 Deployment
+
+To deploy a new image on AKS, follow these steps:
+1. Update the image version in the helm values file located at `/helm/values-<env>.yaml`.
+2. Run the following Helm commands locally:
 
 ```shell
 kubectl config get-contexts
-kubectl config use-context <you-aks-context>
+kubectl config use-context <your-aks-context>
 helm dependency build ./helm
-helm upgrade --namespace apiconfig --install --values ./helm/values-<env>.yaml  --debug   --wait --timeout 10m0s ubuntu-vm ./helm
+helm upgrade --namespace apiconfig --install --values ./helm/values-<env>.yaml --debug --wait --timeout 10m0s ubuntu-vm ./helm
 ```
 
-> [!IMPORTANT]
-> Remember to choose an environment (dev, uat, prod)
+> [!IMPORTANT]  
+> Make sure to select the correct environment (dev, uat, prod).
 
 ---
 
-## 🏠 Work Locally
+## 🏠 Working Locally
 
 ### Prerequisites
 - 🐳 Docker
 - 💻 Intel CPU
 
+To build and run the Docker image locally, use the following commands:
+
 ```shell
 docker build -t ubuntu-vm .
-docker run -d -8080:8080 ubuntu-vm
+docker run -d -p 8080:8080 ubuntu-vm
 ```
