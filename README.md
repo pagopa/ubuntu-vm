@@ -16,6 +16,9 @@ You can use conventional commits on master branch to trigger a new release.
 To deploy a new image on AKS you have to run helm this command locally:
 
 ```shell
+kubectl config get-contexts
+kubectl config use-context <you-aks-context>
+helm dependency build ./helm
 helm upgrade --namespace apiconfig --install --values ./helm/values-<env>.yaml  --debug   --wait --timeout 10m0s ubuntu-vm ./helm
 ```
 
