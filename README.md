@@ -23,7 +23,7 @@ To deploy a new image on AKS, follow these steps:
 kubectl config get-contexts
 kubectl config use-context <your-aks-context>
 helm dependency build ./helm
-helm upgrade --namespace apiconfig --install --values ./helm/values-<env>.yaml --debug --wait --timeout 10m0s ubuntu-vm ./helm
+helm upgrade --namespace apiconfig --install --values ./helm/values-<env>.yaml --debug --wait --timeout 5m0s ubuntu-vm ./helm
 ```
 
 > [!IMPORTANT]  
