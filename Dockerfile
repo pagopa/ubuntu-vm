@@ -19,13 +19,7 @@ RUN apt-get update && apt-get install -y \
 ENV ORACLE_HOME=/opt/oracle/
 ENV LD_LIBRARY_PATH=$ORACLE_HOME
 
-RUN ls
-RUN cd /usr
-RUN ls
-RUN cd /lib
-RUN ls
-RUN cd *-linux-gnu
-RUN ls
+RUN ls && cd /usr && ls && cd /lib && ls && cd *-linux-gnu && ls
 RUN ln -s /usr/lib/*-linux-gnu/libaio.so.1t64 ${ORACLE_HOME}/libaio.so.1
 
 # Define the Oracle Instant Client download URLs
