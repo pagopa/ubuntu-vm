@@ -20,7 +20,7 @@ ENV ORACLE_HOME=/opt/oracle/
 ENV LD_LIBRARY_PATH=$ORACLE_HOME
 
 RUN ls && cd /usr && ls && cd /lib && ls && cd *-linux-gnu && ls
-RUN ln -s /usr/lib/*-linux-gnu/libaio.so.1t64 ${ORACLE_HOME}/libaio.so.1
+RUN ln -s /usr/lib/*-linux-gnu/libaio.so.1t64 ${ORACLE_HOME}libaio.so.1
 
 # Define the Oracle Instant Client download URLs
 ENV BASIC_ZIP_URL="https://download.oracle.com/otn_software/linux/instantclient/2350000/instantclient-basic-linux.x64-23.5.0.24.07.zip"
