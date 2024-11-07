@@ -11,6 +11,7 @@ RUN pip install -r requirements.txt --break-system-packages
 RUN apt-get update && apt-get install -y \
     wget \
     libaio-dev \
+    libaio1 \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
