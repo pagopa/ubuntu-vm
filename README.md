@@ -43,3 +43,8 @@ To build and run the Docker image locally, use the following commands:
 docker build -t ubuntu-vm .
 docker run -d -p 8080:8080 ubuntu-vm
 ```
+
+If you use MAC with arm processor
+```shell
+docker buildx build --platform=linux/amd64 -t ubuntu-vm .
+```
