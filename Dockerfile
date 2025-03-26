@@ -4,18 +4,7 @@ COPY . .
 
 # Install dependencies
 RUN apt-get update -y
-RUN apt-get install -y git
-RUN apt-get install -y python3-pip
-RUN apt-get install -y python3
-RUN apt-get install -y nodejs
-RUN apt-get install -y vim
-RUN apt-get install -y curl
-RUN apt-get install -y iputils-ping
-RUN apt-get install -y postgresql-client
-RUN apt-get install -y wget
-RUN apt-get install -y libaio1t64
-RUN apt-get install -y unzip
-RUN apt-get install -y dsnutil
+RUN apt-get install -y git python3-pip python3 nodejs vim curl iputils-ping postgresql-client wget libaio1t64 unzip dsnutil
 RUN rm -rf /var/lib/apt/lists/*
 
 
