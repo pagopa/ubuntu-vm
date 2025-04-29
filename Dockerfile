@@ -15,7 +15,6 @@ RUN apt-get install -y postgresql-client
 RUN apt-get install -y wget
 RUN apt-get install -y libaio1t64
 RUN apt-get install -y unzip
-RUN apt-get install -y dsnutil
 RUN rm -rf /var/lib/apt/lists/*
 
 
