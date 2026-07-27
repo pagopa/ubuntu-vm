@@ -48,7 +48,7 @@ microservice-chart:
   serviceAccount:
     create: false
     annotations: {}
-    name: ""
+    name: "apiconfig-workload-identity"
 
   podAnnotations: {}
   podSecurityContext:
@@ -90,6 +90,6 @@ microservice-chart:
     name: "pagopa-u-apiconfig-kv"
     tenantId: "7788edaf-0346-4068-9d79-c868aed15b3d"
   azure:
-    workloadIdentityClientId: "cf8cba28-3d1f-4fa7-8d6e-2f3112d3e3bc"
+    workloadIdentityClientId: "969fd654-5d26-43d4-a8d9-1552f3170ba4"
 
 
