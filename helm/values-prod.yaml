@@ -89,5 +89,7 @@ microservice-chart:
   keyvault:
     name: "pagopa-p-apiconfig-kv"
     tenantId: "7788edaf-0346-4068-9d79-c868aed15b3d"
+  azure:
+    workloadIdentityClientId: "2096f046-8aa8-4dff-8bc3-5cecbf67a2ec"
 
 
